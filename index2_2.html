@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<title>公司公告</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index2_2.css"/>
+		<script src="js/fanhiu.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!--头部-->
+	<header>
+		<div class="header">
+			<div class="text">咨询文章
+				<a onclick="javascript:history.go(-1)" style="position: absolute;text-align: left; float: left; font-size: 14px; left: 10px; ">
+					<span class="icon iconfont icon-xiaoyuhao"></span>
+				</a>
+			</div>
+		</div>
+	</header>
+		<!--公司列表-->
+		<div class="container">
+				<!--公司公告-->
+				<div class="gonggao">
+					<div><h3>澳子头2017年3月份财务报表 </h3></div>
+					<ul class="lists">
+						<li>
+							<p><span>2017-08-29 00:00:00</span><span class="span">查看附件</span></p>
+							<p class="neirong">具体财务报表清查看附件源文件</p>
+						</li>
+					</ul>
+				</div>
+			</ul>
+		</div>
+	<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/fanhiu.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function(){
+			aa = window.location.href.split("?")[1]
+			$.ajax({
+                type: 'GET',
+                url: 'json/update.json',
+                dataType: 'json',
+                success: function(data){
+                	$(".neirong").html(data.lists[aa].xinwen)
+//              	查看原文
+                	$(".lists").on("click",function(){
+                		alert("正在跳转到原文")
+                	})	
+                }
+           });
+		})		
+		
+	</script>
+	</body>
+</html>

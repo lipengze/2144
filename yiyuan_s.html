@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>推荐医院</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/dropload.css"/>
+</head>
+<body>
+<!--头部-->
+		<header>
+			<div class="header">
+				<div class="text">推荐医院
+					<a href="index.html" style="position: absolute;text-align: left; float: left; font-size: 14px; left: 10px; ">
+						<span class="icon iconfont icon-xiaoyuhao"></span>
+					</a>
+				</div>
+			</div>
+		</header>
+		<!--公司列表-->
+		<div class="container">
+			<div class="recommend">
+				<div class="go">
+					<img src="image/m1.jpg"/>
+					<div class="right">
+						<h1>麦芽口腔罗湖机构</h1>
+						<div class="comment">
+							<li class="li">★</li>
+							<li class="li">★</li>
+							<li class="li">★</li>
+							<li class="li">★</li>
+							<li class="li">★</li>
+							<li class="li">5分</li>
+						</div><br />
+						<div class="dizi">罗湖区深南东路2102号振华大厦顺电左侧罗湖区深南东路2102号振华大厦顺电左侧罗湖区深南东路2102号振华大厦顺电左侧罗湖区深南东路2102号振华大厦顺电左侧</div>
+						<span>1.2km</span>
+						<p>22条评论</p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/dropload.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/fanhiu.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(function(){
+	$('body').on("click",'.go',function(){
+		var name = $(this).children('div').children('h1').html()
+		var dizhi = $(this).children('div').children('.dizi').html()
+		location.href = "ziyemian/hospital_yiyuanxiangqing.html?name=" + name + "&&dizhi=" + dizhi
+	})
+		
+	    var counter = 0;
+	    // 每页展示4个
+	    var num = 4;
+	    var pageStart = 0,pageEnd = 0;
+	
+	    // dropload
+	    $(".container").dropload({
+	        scrollArea : window,
+	        domUp : {
+	            domClass   : 'dropload-up',
+	            domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+	            domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+	            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+	        },
+	        domDown : {
+	            domClass   : 'dropload-down',
+	            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+	            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+	            domNoData  : '<div class="dropload-noData">暂无数据</div>'
+	        },
+	        loadUpFn : function(me){
+	            $.ajax({
+	                type: 'GET',
+	                url: 'json/update.json',
+	                dataType: 'json',
+	                success: function(data){
+	                    var result = '';
+	                    for(var i = 0; i < data.lists.length; i++){
+	                        result +=   '<div class="go"> <img src="image/m1.jpg"/> <div class="right"> <h1>麦芽口腔罗湖机构</h1>'+
+										'<div class="comment"> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">5分</li> </div><br />'+
+										'<div class="dizi">罗湖区深南东路2102号振华大厦顺电左侧罗湖区深南东路2102</div>'+
+										'<span>1.2km</span> <p>22条评论</p> </div> </div>'
+	                    }
+	                    // 为了测试，延迟1秒加载
+	                    setTimeout(function(){
+	                        $('.recommend').html(result);
+	                        // 每次数据加载完，必须重置
+	                        me.resetload();
+	                        // 重置索引值，重新拼接more.json数据
+	                        counter = 0;
+	                        // 解锁
+	                        me.unlock();
+	                        me.noData(false);
+	                    },1000);
+	                },
+	                error: function(xhr, type){
+	                    alert('Ajax error!');
+	                    // 即使加载出错，也得重置
+	                    me.resetload();
+	                }
+	            });
+	        },
+	        loadDownFn : function(me){
+	            $.ajax({
+	                type: 'GET',
+	                url: 'json/more.json',
+	                dataType: 'json',
+	                success: function(data){
+	                    var result = '';
+	                    counter++;
+	                    pageEnd = num * counter;
+	                    pageStart = pageEnd - num;
+	
+	                    for(var i = pageStart; i < pageEnd; i++){
+	                        result +=   '<div class="go"> <img src="image/m1.jpg"/> <div class="right"> <h1>麦芽口腔罗湖机构</h1>'+
+										'<div class="comment"> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">★</li> <li class="li">5分</li> </div><br />'+
+										'<div class="dizi">罗湖区深南东路2102号振华大厦顺电左侧罗湖区深南东路2102</div>'+
+										'<span>1.2km</span> <p>22条评论</p> </div> </div>'
+	                        if((i + 1) >= data.lists.length){
+	                            // 锁定
+	                            me.lock();
+	                            // 无数据
+	                            me.noData();
+	                            break;
+	                        }
+	                    }
+	                    // 为了测试，延迟1秒加载
+	                    setTimeout(function(){
+	                        $('.recommend').append(result);
+	                        // 每次数据加载完，必须重置
+	                        me.resetload();
+	                    },1000);
+	                },
+	                error: function(xhr, type){
+	                    alert('Ajax error!');
+	                    // 即使加载出错，也得重置
+	                    me.resetload();
+	                }
+	            });
+	        },
+	        threshold : 50
+	    });
+	});	
+	</script>
+	</body>
+</html>

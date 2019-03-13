@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/log.css"/>
+		<script src="js/remove.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!--中部-->
+		<div class="container">
+			<div id="tip"></div>
+			<div class="yonghu">登录</div>
+			<div class="input">
+				<label for="username" class="input_div">用户名/身份证 </label>
+				<span class="icon iconfont icon-xingmingyonghumingnicheng-copy"></span>
+				<input type="text" id="username" placeholder="请输入用户名"/>
+				<span class="icon iconfont"></span><br />
+			</div>
+			<div class="input">
+				<label for="password" class="label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<span class="icon iconfont icon-mima"></span>
+				<input type="password"  id="password" placeholder="请输入密码" switch="true"/>
+				<span class="icon iconfont icon-eyes"></span><br />
+			</div>
+			<div>
+				<a href="change.html" id="change">修改密码</a>
+			</div>
+			<button id="log">登录</button>
+			<div>
+				<a href="reg.html">还没账号？注册</a>
+			</div>
+		</div>
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+//				获取焦点和失去焦点的效果
+				$(".input input").focus(function(){
+					$(this).parent(".input").css("border-bottom", "1px solid #0093DD")
+					$(this).siblings(".icon-xingmingyonghumingnicheng-copy").css("color","#0093DD")
+					$(this).siblings(".icon-mima").css("color","#0093DD")
+					$(this).siblings(".icon-mima").css("color","#0093DD")
+					$(this).siblings("label").css("color","#0093DD")
+				})
+				$(".input input").blur(function(){
+					$(this).parent(".input").css("border-bottom", "1px solid #F1F0EF")
+					$(this).siblings(".icon-xingmingyonghumingnicheng-copy").css("color","#999999")
+					$(this).siblings(".icon-mima").css("color","#999999")
+					$(this).siblings("label").css("color","#999999")
+				})
+//				密码显示与隐藏
+				$(".icon-eyes").click(function(){
+					if($(this).siblings("input").attr("switch")=='false'){
+						$(".icon-eyes").css("color","#F4F4F4")
+						$(this).siblings("input").attr("type",'password')
+						$(this).siblings("input").attr("switch","true")
+					}else if($(this).siblings("input").attr("switch")=='true'){
+						$(".icon-eyes").css("color","#0093DD")
+						$(this).siblings("input").attr("type",'text')
+						$(this).siblings("input").attr("switch","false")
+					}
+				})
+				
+				var tip;
+				$("#log").click(function(){
+					if($("#username").val()==""||$("#password").val()==""){
+						$("#tip").text("用户名或密码为空");
+						$("#tip").fadeIn(1000)
+						setTimeout(tip,1500)
+					}else{
+						window.location.href="index.html"
+//							$.ajax({
+//								type:"post",
+//								url:url+"login",
+//								async:true,
+//								data:{
+//									username:$("#username").val(),
+//									userpwd:$("#password").val()
+//								},
+//								success:function(data){
+//									if(data.errcode==0){
+//										alert("登录成功")
+//										location.href="index.html";
+//										localStorage.setItem("username",$("#username").val());
+//										localStorage.setItem("token",data.tokenid);
+//									}else{
+//										$("#tip").text(data.msg);
+//										$("#tip").fadeOut(1000)
+//										setTimeout(tip,5000)
+//										
+//									}
+//								}
+//							});	
+					}
+					function tip(){$("#tip").fadeOut(1000)}
+				})	
+			})		
+		</script>
+	</body>
+</html>

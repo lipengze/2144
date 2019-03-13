@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+		<title>推荐医生</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/yisheng_s.css"/>
+		<link rel="stylesheet" type="text/css" href="css/dropload.css"/>
+	</head>
+	<body>
+		<!--头部-->
+		<header>
+			<div class="header">
+				<div class="text">推荐医生
+					<a href="javascript:history.go(-1)" style="position: absolute;text-align: left; float: left; font-size: 14px; left: 10px; color: #FFFFFF; ">
+						<span class="icon iconfont icon-xiaoyuhao"></span>
+					</a>
+				</div>
+			</div>
+		</header>
+		<!--公司列表-->
+		<div class="container">
+			<div class="recommends">
+				<li class="yisheng">
+					<img src="image/zj-wx.png"/>
+					<div class="right">
+						<h5><a>李名 </a> <span>主治医生</span></h5>
+						<h6>儿童牙医  口腔医院</h6>
+						<p>擅长：儿童蛀牙，拔牙，洗牙</p>
+						<h3 class="icon iconfont icon-star_full">&nbsp;&nbsp;5.0</h3>
+						<div class="go1">预约TA</div>
+					</div>
+				</li>
+
+			</div>
+		</div>
+	<script src="js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/dropload.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/fanhiu.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(function(){
+//	更多医生
+	$('body').on("click",'.go1',function(){
+		var name = $(this).siblings('h5').children('a').html()
+		var dizhi = $(this).siblings('h6').html()
+		location.href = "ziyemian/index_ysxq.html?name=" + name + "&&dizhi=" + dizhi
+	})	
+		
+	    var counter = 0;
+	    // 每页展示4个
+	    var num = 4;
+	    var pageStart = 0,pageEnd = 0;
+	
+	    // dropload
+	    $(".container").dropload({
+	        scrollArea : window,
+	        domUp : {
+	            domClass   : 'dropload-up',
+	            domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+	            domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+	            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+	        },
+	        domDown : {
+	            domClass   : 'dropload-down',
+	            domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+	            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+	            domNoData  : '<div class="dropload-noData">暂无数据</div>'
+	        },
+	        loadUpFn : function(me){
+	            $.ajax({
+	                type: 'GET',
+	                url: 'json/update.json',
+	                dataType: 'json',
+	                success: function(data){
+	                    var result = '';
+	                    for(var i = 0; i < data.lists.length; i++){
+	                        result +=   '<li class="yisheng"><img src="image/zj-wx.png"/><div class="right"><h5><a>李名 </a><span>主治医生</span></h5>'+
+	                        '<h6>儿童牙医  口腔医院</h6> <p>擅长：儿童蛀牙，拔牙，洗牙</p> <h3 class="icon iconfont icon-star_full">&nbsp;&nbsp;5.0</h3>'+
+	                        '<div class="go1">预约TA</div> </div> </li>'
+	                    }
+	                    // 为了测试，延迟1秒加载
+	                    setTimeout(function(){
+	                        $('.recommends').html(result);
+	                        // 每次数据加载完，必须重置
+	                        me.resetload();
+	                        // 重置索引值，重新拼接more.json数据
+	                        counter = 0;
+	                        // 解锁
+	                        me.unlock();
+	                        me.noData(false);
+	                    },1000);
+	                },
+	                error: function(xhr, type){
+	                    alert('Ajax error!');
+	                    // 即使加载出错，也得重置
+	                    me.resetload();
+	                }
+	            });
+	        },
+	        loadDownFn : function(me){
+	            $.ajax({
+	                type: 'GET',
+	                url: 'json/more.json',
+	                dataType: 'json',
+	                success: function(data){
+	                    var result = '';
+	                    counter++;
+	                    pageEnd = num * counter;
+	                    pageStart = pageEnd - num;
+	
+	                    for(var i = pageStart; i < pageEnd; i++){
+	                        result +=   '<li class="yisheng"><img src="image/zj-wx.png"/><div class="right"><h5><a>李名 </a><span>主治医生</span></h5>'+
+	                        '<h6>儿童牙医  口腔医院</h6> <p>擅长：儿童蛀牙，拔牙，洗牙</p> <h3 class="icon iconfont icon-star_full">&nbsp;&nbsp;5.0</h3>'+
+	                        '<div class="go1">预约TA</div> </div> </li>'
+	                        if((i + 1) >= data.lists.length){
+	                            // 锁定
+	                            me.lock();
+	                            // 无数据
+	                            me.noData();
+	                            break;
+	                        }
+	                    }
+	                    // 为了测试，延迟1秒加载
+	                    setTimeout(function(){
+	                        $('.recommends').append(result);
+	                        // 每次数据加载完，必须重置
+	                        me.resetload();
+	                    },1000);
+	                },
+	                error: function(xhr, type){
+	                    alert('Ajax error!');
+	                    // 即使加载出错，也得重置
+	                    me.resetload();
+	                }
+	            });
+	        },
+	        threshold : 50
+	    });
+	});	
+	</script>
+	</body>
+</html>
