@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>授权</title>
+		<link rel="shortcut icon" href="../image/aa.png" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<script src="../js/fanhiu.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/*头部*/
+			
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				text-decoration: none;
+			}
+			
+			del {
+				text-decoration: line-through;
+			}
+			
+			body {
+				background: #F4F4F4;
+				height: 100%;
+			}
+			
+			.container {
+				max-width: 750px;
+				min-width: 32px;
+				margin: 0 auto;
+				padding: 60px 0 80px 0;
+				background: #F4F4F4;
+			}
+			
+			[class^="icon"] {
+				display: inline-block;
+			}
+			
+			header {
+				background-color: #3DD187;
+				/*改变颜色*/
+				height: 60px;
+				line-height: 60px;
+				color: #FFFFFF;
+				position: fixed;
+				width: 100%;
+				max-width: 750px;
+				top: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				z-index: 999;
+			}
+			
+			.text {
+				width: 190px;
+				margin: auto;
+				font-size: 20px;
+				text-align: center;
+			}
+			
+			.container h4 {
+				background: #FFFFFF;
+				height: 50px;
+				line-height: 50px;
+				font-size: 19px;
+				color: #898989;
+				border-bottom: 1px solid #F4F4F4;
+				text-align: center;
+			}
+			.container p:nth-child(1){
+				margin-top: 10px;
+			}
+			.container p {
+				width: 90%;
+				margin: auto;
+				line-height: 35px;
+			}
+			
+			button {
+				display: block;
+				width: 90%;
+				background: #3DD187;
+				color: #FFFFFF;
+				text-align: center;
+				height: 45px;
+				line-height: 45px;
+				border-radius: 5px;
+				margin: 20px auto;
+				font-size: 17px;
+				border: 0;
+			}
+			.btn {
+				display: block;
+				width: 90%;
+				text-align: center;
+				height: 45px;
+				line-height: 45px;
+				border-radius: 5px;
+				margin: 20px auto;
+				font-size: 17px;
+				border: 0;
+				background: #FFFFFF !important;
+				color: #000000 !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--头部-->
+		<header>
+			<div class="header">
+				<div class="text">我的
+					<a href="javascript:history.go(-1)" style="position: absolute;text-align: left; float: left; color: #FFFFFF; font-size: 14px; left: 10px; ">
+						<span class="icon iconfont icon-xiaoyuhao"></span>
+					</a>
+				</div>
+			</div>
+		</header>
+		<!--中部-->
+		<div class="container">
+			<p>1,同意当前小程序获取我的微信头像</p>
+			<p>2,同意当前小程序获取我的微信昵称等其他信息</p>
+
+			<a href="yanzhengma.html"><button>授权登录</button></a>
+			<a href="../my.html"><button class="btn">随便逛逛</button></a>
+		</div>
+	</body>
+<script src="../cang/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+				type:"post",
+				url:'228k7944x5.iask.in:36828',
+				async:true,
+//				data:{
+//					username:$("#username").val(),
+//					userpwd:$("#password").val()
+//				},
+				success:function(data){
+					console.log(data)
+//					if(data.errcode==0){
+//						alert("登录成功")
+//						location.href="index.html";
+//						localStorage.setItem("username",$("#username").val());
+//						localStorage.setItem("token",data.tokenid);
+//					}else{
+//						$("#tip").text(data.msg);
+//						$("#tip").fadeOut(1000)
+//						setTimeout(tip,5000)
+//						
+//					}
+				}
+			});	
+	})
+</script>
+</html>
